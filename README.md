@@ -31,9 +31,10 @@ Traces des étapes :
 - La seconde VM est accessible via vagrant ssh.
 - Il faut maintenant que nous faisions des tests de vulnérabilité du serveur. De plus, en se connectant à l’ip du serveur nous accédons à la page web apache.
 - Installation de nmap sur la VM 2.
-- Sur plusieurs console : ”sudo hping3 -p 80 -S 192.168.10.3 --fast -d 1000 --rand-source”
+- Nous avons cherché à utiliser des failles sql, pour les bloquer par la suite, cependant nous n'avons pas réussi.
+- Nous avons également essayé de "surcharger" de données le client via l'envoi de nombreux paquets, mais encore une fois cela n'a pas fonctionné ; la commande : ”sudo hping3 -p 80 -S 192.168.10.3 --fast -d 1000 --rand-source”
 
-Voici une explication du contenu des fichiers Vagrantfile que j'ai fournis :
+Voici une explication du contenu des fichiers Vagrantfile que nous avons fournis :
 
 1. **Vagrantfile pour le serveur (VM Debian avec nginx et firewall)** :
     - Vagrant.configure("2") do |config| : Cette ligne spécifie la version de la configuration de Vagrant utilisée, qui est "2" dans ce cas.
