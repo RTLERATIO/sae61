@@ -34,19 +34,11 @@ Traces des étapes :
 - Nous avons cherché à utiliser des failles sql, pour les bloquer par la suite, cependant nous n'avons pas réussi.
 - Nous avons également essayé de "surcharger" de données le client via l'envoi de nombreux paquets, mais encore une fois cela n'a pas fonctionné ; la commande : ”sudo hping3 -p 80 -S 192.168.10.3 --fast -d 1000 --rand-source”
 
-Voici une explication du contenu des fichiers Vagrantfile que nous avons fournis :
-
-1. **Vagrantfile pour le serveur (VM Debian avec nginx et firewall)** :
+**Voici une explication du contenu du fichier Vagrantfile que nous avons fournis :**
     - Vagrant.configure("2") do |config| : Cette ligne spécifie la version de la configuration de Vagrant utilisée, qui est "2" dans ce cas.
     - config.vm.define "serveur" do |serveur| : Cette ligne commence la configuration de la machine virtuelle nommée "serveur".
     - serveur.vm.box = "debian/buster64" : Cela spécifie l'image de la machine virtuelle à utiliser. Dans ce cas, nous utilisons une image Debian Buster 64 bits.
-    - serveur.vm.hostname = "serveur" : Cela définit le nom d'hôte de la machine virtuelle.
     - serveur.vm.network "private_network", ip: "192.168.0.10" : Cette ligne configure une interface réseau privée pour la machine virtuelle avec une adresse IP statique de 192.168.0.10.
-    - serveur.vm.provision "shell", inline: <<-SHELL ... : Cette section définit les instructions de provisionnement. Dans ce cas, nous utilisons un script shell en ligne pour installer nginx, configurer une page statique, installer et configurer un pare-feu (ufw) pour autoriser le trafic HTTP.
-2. **Vagrantfile pour la machine de test** :
-    - Vagrant.configure("2") do |config| : Comme précédemment, cette ligne spécifie la version de la configuration de Vagrant utilisée.
-    - config.vm.define "test" do |test| : Cette ligne commence la configuration de la machine virtuelle nommée "test".
-    - test.vm.box = "debian/buster64" : Comme pour le serveur, nous utilisons également une image Debian Buster 64 bits pour la machine de test.
-    - test.vm.hostname = "test" : Cela définit le nom d'hôte de la machine virtuelle de test.
-    - test.vm.network "private_network", ip: "192.168.0.11" : Cette ligne configure une interface réseau privée avec une adresse IP statique de 192.168.0.11 pour la machine de test.
-    - test.vm.provision "shell", inline: <<-SHELL ... : Cette section peut être utilisée pour ajouter des instructions de provisionnement supplémentaires, telles que des tests pour vérifier l'accès aux pages web et pour tester des attaques classiques. Dans l'exemple fourni, cette section est laissée vide pour que vous puissiez ajouter vos propres tests selon vos besoins.
+    - serveur.vm.provision "shell", inline: <<-SHELL ... : Cette section définit les instructions de provisionnement. 
+Dans le cas du serveur, nous utilisons un script shell en ligne pour installer apache, configurer une page statique, installer et configurer un pare-feu (ufw) pour autoriser le trafic HTTP.
+Dans le cas du client, des outils pour vérifier l'accès aux pages web et pour tester des attaques classiques.
